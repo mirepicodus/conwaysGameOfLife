@@ -77,11 +77,17 @@ describe("World", function() {
   describe("nextGeneration", function() {
     it("toggles isAlive based on life criteria", function(){
       var testWorld = World.create();
-      testWorld.cells[0].isAliveToggle();
-      testWorld.cells[1].isAliveToggle();
-      testWorld.cells[2].isAliveToggle();
+      testWorld.cells[10].isAliveToggle();
+      testWorld.cells[11].isAliveToggle();
+      testWorld.cells[12].isAliveToggle();
       testWorld.nextGeneration();
-      testWorld.cells[1].isAliveNeighbors.should.equal(2);
+      testWorld.cells[1].isAlive.should.equal(true);
+      testWorld.cells[11].isAlive.should.equal(true);
+      testWorld.cells[21].isAlive.should.equal(true);
+      testWorld.nextGeneration();
+      testWorld.cells[10].isAlive.should.equal(true);
+      testWorld.cells[11].isAlive.should.equal(true);
+      testWorld.cells[12].isAlive.should.equal(true);
     });
   });
 });
