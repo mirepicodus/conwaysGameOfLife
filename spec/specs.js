@@ -1,18 +1,3 @@
-// Any live cell with fewer than two live neighbors dies, as if caused by under-population.
-// Any live cell with two or three live neighbors lives on to the next generation.
-// Any live cell with more than three live neighbors dies, as if by overcrowding.
-// Any dead cell with exactly three live neighbors becomes a live cell, as if by reproduction.
-
-// Need to know if "alive".
-
-// Need to know how many neighbors are alive
-
-// Toggle alive/dead
-
-// Make board
-
-// Time increment
-
 describe("Cell", function(){
   describe("initialize", function() {
     it("initializes cell with false isAlive value, isAliveNeighbors with 0 and coordinates of cell.", function(){
@@ -45,46 +30,58 @@ describe("Cell", function(){
   });
 });
 
-describe("Board", function() {
+describe("World", function() {
   describe("initialize", function() {
-    it("initializes board with 100 spaces", function(){
-      var testBoard = Object.create(Board);
-      testBoard.initialize();
-      testBoard.cells[0].xCoordinate.should.equal(1);
-      testBoard.cells[1].yCoordinate.should.equal(2);
+    it("initializes world with 100 spaces", function(){
+      var testWorld = Object.create(World);
+      testWorld.initialize();
+      testWorld.cells[0].xCoordinate.should.equal(1);
+      testWorld.cells[1].yCoordinate.should.equal(2);
     });
   });
   describe("create", function() {
-    it("creates board object and calls initialize", function(){
-      var testBoard = Board.create();
-      Board.isPrototypeOf(testBoard).should.equal(true);
-      testBoard.cells[0].xCoordinate.should.equal(1);
-      testBoard.cells[1].yCoordinate.should.equal(2);
+    it("creates World object and calls initialize", function(){
+      var testWorld = World.create();
+      World.isPrototypeOf(testWorld).should.equal(true);
+      testWorld.cells[0].xCoordinate.should.equal(1);
+      testWorld.cells[1].yCoordinate.should.equal(2);
     });
   });
   describe("findCell", function(xCoordinate, yCoordinate) {
     it("finds and returns cell by coordinates", function(){
-      var testBoard = Board.create();
-      var testCell = testBoard.findCell(1,1);
+      var testWorld = World.create();
+      var testCell = testWorld.findCell(1,1);
       testCell.xCoordinate.should.equal(1);
     });
   });
   describe("findAliveNeighbors", function() {
     it("finds states of all neighbors and sets cell isAliveNeighbors value.", function(){
-      var testBoard = Board.create();
-      testBoard.cells[0].isAliveToggle();
-      testBoard.cells[1].isAliveToggle();
-      testBoard.cells[2].isAliveToggle();
-      testBoard.findAliveNeighbors(testBoard.findCell(2, 2))
-      testBoard.cells[11].isAliveNeighbors.should.equal(3);
+      var testWorld = World.create();
+      testWorld.cells[0].isAliveToggle();
+      testWorld.cells[1].isAliveToggle();
+      testWorld.cells[2].isAliveToggle();
+      testWorld.findAliveNeighbors(testWorld.findCell(1, 2))
+      testWorld.cells[1].isAliveNeighbors.should.equal(2);
     });
   });
-  // describe("nextGeneration", function() {
-  //   it("creates board object and calls initialize", function(){
-  //     var testBoard = Board.create();
-  //     Board.isPrototypeOf(testBoard).should.equal(true);
-  //     testBoard.cells[0].xCoordinate.should.equal(1);
-  //     testBoard.cells[1].yCoordinate.should.equal(2);
-  //   });
-  // });
+  describe("setAliveNeighbors", function() {
+    it("finds states of all neighbors and sets cell isAliveNeighbors value.", function(){
+      var testWorld = World.create();
+      testWorld.cells[0].isAliveToggle();
+      testWorld.cells[1].isAliveToggle();
+      testWorld.cells[2].isAliveToggle();
+      testWorld.setAliveNeighbors();
+      testWorld.cells[1].isAliveNeighbors.should.equal(2);
+    });
+  });
+  describe("nextGeneration", function() {
+    it("toggles isAlive based on life criteria", function(){
+      var testWorld = World.create();
+      testWorld.cells[0].isAliveToggle();
+      testWorld.cells[1].isAliveToggle();
+      testWorld.cells[2].isAliveToggle();
+      testWorld.nextGeneration();
+      testWorld.cells[1].isAliveNeighbors.should.equal(2);
+    });
+  });
 });

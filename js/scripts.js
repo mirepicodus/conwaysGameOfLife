@@ -16,10 +16,13 @@ var Cell = {
     } else {
       this.isAlive = true;
     }
+  },
+  findAliveNeighbors: function(cell) {
+    return cell;
   }
 }
 
-var Board = {
+var World = {
   initialize: function() {
     this.cells = [];
     for(var i = 1; i <= 10; i++) {
@@ -29,12 +32,12 @@ var Board = {
     }
   },
   create: function() {
-    var newBoard = Object.create(Board);
-    newBoard.initialize();
-    return newBoard;
+    var newWorld = Object.create(World);
+    newWorld.initialize();
+    return newWorld;
   },
   findCell: function(xCoordinate, yCoordinate) {
-    var foundCell;
+    var foundCell = { isAliveNeighbors: 0 };
     this.cells.forEach(function(cell) {
       if(xCoordinate === cell.xCoordinate && yCoordinate === cell.yCoordinate)
         foundCell = cell;
@@ -48,7 +51,6 @@ var Board = {
     for(var i = -1; i <= 1; i++) {
       for(var j= -1; j <= 1; j++) {
         if (!(i === 0 && j === 0)) {
-          console.log(this.findCell(xCoordinate + i, yCoordinate + j));
           if (this.findCell(xCoordinate + i, yCoordinate + j).isAlive) {
             totalNeighborsAlive++;
           }
@@ -56,5 +58,26 @@ var Board = {
       }
     }
     cellToCheck.isAliveNeighbors = totalNeighborsAlive;
+  },
+  setAliveNeighbors: function() {
+    for(var i = 0; i < this.cells.length; i++) {
+      this.findAliveNeighbors(this.cells[i]);
+    }
+  },
+  nextGeneration: function() {
+    this.setAliveNeighbors();
+    this.cells.forEach(function(cell) {
+      if(cell.isAlive) {
+        if(cell.isAliveNeighbors < 2) {
+          cell.isAliveToggle();
+        } else if(cell.isAliveNeighbors > 3) {
+          cell.isAliveToggle();
+        }
+      } else {
+        if(cell.isAliveNeighbors === 3) {
+          cell.isAliveToggle();
+        }
+      }
+    });
   }
 }
