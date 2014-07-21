@@ -15,12 +15,13 @@
 
 describe("Cell", function(){
   describe("initialize", function() {
-    it("initializes cell with true alive value and passed coordinates.", function(){
+    it("initializes cell with false isAlive value, isAliveNeighbors with 0 and coordinates of cell.", function(){
       var testCell = Object.create(Cell);
       testCell.initialize(1, 3);
       testCell.xCoordinate.should.equal(1);
       testCell.yCoordinate.should.equal(3);
       testCell.isAlive.should.equal(false);
+      testCell.isAliveNeighbors.should.equal(0);
     });
   });
   describe("create", function() {
@@ -42,4 +43,48 @@ describe("Cell", function(){
       testCell.isAlive.should.equal(false);
     });
   });
+});
+
+describe("Board", function() {
+  describe("initialize", function() {
+    it("initializes board with 100 spaces", function(){
+      var testBoard = Object.create(Board);
+      testBoard.initialize();
+      testBoard.cells[0].xCoordinate.should.equal(1);
+      testBoard.cells[1].yCoordinate.should.equal(2);
+    });
+  });
+  describe("create", function() {
+    it("creates board object and calls initialize", function(){
+      var testBoard = Board.create();
+      Board.isPrototypeOf(testBoard).should.equal(true);
+      testBoard.cells[0].xCoordinate.should.equal(1);
+      testBoard.cells[1].yCoordinate.should.equal(2);
+    });
+  });
+  describe("findCell", function(xCoordinate, yCoordinate) {
+    it("finds and returns cell by coordinates", function(){
+      var testBoard = Board.create();
+      var testCell = testBoard.findCell(1,1);
+      testCell.xCoordinate.should.equal(1);
+    });
+  });
+  describe("findAliveNeighbors", function() {
+    it("finds states of all neighbors and sets cell isAliveNeighbors value.", function(){
+      var testBoard = Board.create();
+      testBoard.cells[0].isAliveToggle();
+      testBoard.cells[1].isAliveToggle();
+      testBoard.cells[2].isAliveToggle();
+      testBoard.findAliveNeighbors(testBoard.findCell(2, 2))
+      testBoard.cells[11].isAliveNeighbors.should.equal(3);
+    });
+  });
+  // describe("nextGeneration", function() {
+  //   it("creates board object and calls initialize", function(){
+  //     var testBoard = Board.create();
+  //     Board.isPrototypeOf(testBoard).should.equal(true);
+  //     testBoard.cells[0].xCoordinate.should.equal(1);
+  //     testBoard.cells[1].yCoordinate.should.equal(2);
+  //   });
+  // });
 });
