@@ -1,6 +1,7 @@
 // wrap around
 // variable speed
 // variable board size
+// view by array
 
 describe("Cell", function(){
   describe("initialize", function() {

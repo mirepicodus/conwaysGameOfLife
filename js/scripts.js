@@ -84,13 +84,18 @@ var World = {
 
 $(document).ready(function() {
   newWorld = World.create();
+  for(var i = 1; i <= 10; i++) {
+    for(var j = 1; j <=10; j++) {
+      if (Math.random() > .5)
+        newWorld.findCell(i, j).isAliveToggle();
+    }
+  }
 
-  setInterval(function() {
+  var timer = function() {
     $('#board').text("");
     for(var i = 1; i <= 10; i++) {
       $('#board').append("<tr id=\"row-" + i + "\">");
       for(var j = 1; j <=10; j++) {
-        console.log(newWorld.findCell(i, j).isAlive);
         if (newWorld.findCell(i, j).isAlive)
           $('#row-' + i).append("<td class=\"alive\"></td>");
         else
@@ -99,7 +104,10 @@ $(document).ready(function() {
       $('#board').append("</tr>");
     }
     newWorld.nextGeneration();
-  }, 1000);
+  }
+
+  window.setInterval(timer, 300);
+  timer();
 });
 
 
