@@ -1,0 +1,19 @@
+table {
+  margin: 0 auto;
+  /*border-collapse: collapse;*/
+  border-color: black;
+  background: white;
+}
+td {
+  width: 20px; height: 20px;
+  border: 2px solid black;
+
+}
+.alive {
+  background-color: #336699;
+}
+
+.dead {
+
+}
+

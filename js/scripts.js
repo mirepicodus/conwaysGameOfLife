@@ -81,3 +81,32 @@ var World = {
     });
   }
 }
+
+$(document).ready(function() {
+  newWorld = World.create();
+
+  setInterval(function() {
+    $('#board').text("");
+    for(var i = 1; i <= 10; i++) {
+      $('#board').append("<tr id=\"row-" + i + "\">");
+      for(var j = 1; j <=10; j++) {
+        console.log(newWorld.findCell(i, j).isAlive);
+        if (newWorld.findCell(i, j).isAlive)
+          $('#row-' + i).append("<td class=\"alive\"></td>");
+        else
+          $('#row-' + i).append("<td class=\"dead\"></td>");
+      }
+      $('#board').append("</tr>");
+    }
+    newWorld.nextGeneration();
+  }, 1000);
+});
+
+
+     // $('td').last().on( "click", function() {
+      //   console.log(this);
+      //   if($(this).css('background-color')=='#00cc00')
+      //     $(this).css('background-color', '#336699');
+      //   else {
+      //    $(this).css('background-color', '#00cc00');
+      //   }

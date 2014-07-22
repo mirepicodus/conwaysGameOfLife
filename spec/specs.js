@@ -1,3 +1,7 @@
+// wrap around
+// variable speed
+// variable board size
+
 describe("Cell", function(){
   describe("initialize", function() {
     it("initializes cell with false isAlive value, isAliveNeighbors with 0 and coordinates of cell.", function(){
