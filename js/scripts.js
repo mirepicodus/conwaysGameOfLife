@@ -25,8 +25,8 @@ var Cell = {
 var World = {
   initialize: function() {
     this.cells = [];
-    for(var i = 1; i <= 40; i++) {
-      for(var j = 1; j <=40; j++) {
+    for(var i = 1; i <= 30; i++) {
+      for(var j = 1; j <=30; j++) {
         this.cells.push(Cell.create(i, j));
       }
     }
@@ -84,19 +84,30 @@ var World = {
 
 $(document).ready(function() {
   newWorld = World.create();
-  $('td').last().on( "click", function() {
-  console.log(this);
-  if($(this).css('background-color')=='#00cc00')
-    $(this).css('background-color', '#336699');
-  else {
-   $(this).css('background-color', '#00cc00');
-  }
+  // $('td').last().on( "click", function() {
+  // console.log(this);
+  // if($(this).css('background-color')=='#00cc00')
+  //   $(this).css('background-color', '#336699');
+  // else {
+  //  $(this).css('background-color', '#00cc00');
+  // }
+  $('#randomize').click(function() {
+    for(var i = 1; i <= 30; i++) {
+      for(var j = 1; j <=30; j++) {
+        if (Math.random() > .5)
+          newWorld.findCell(i, j).isAliveToggle();
+      }
+    }
+  });
 
-  var timer = function() {
+
+  var generations = setInterval(function(){generation()},1000);
+  function generation() {
+    newWorld.nextGeneration();
     $('#board').text("");
-    for(var i = 1; i <= 40; i++) {
+    for(var i = 1; i <= 30; i++) {
       $('#board').append("<tr id=\"row-" + i + "\">");
-      for(var j = 1; j <=40; j++) {
+      for(var j = 1; j <=30; j++) {
         if (newWorld.findCell(i, j).isAlive)
           $('#row-' + i).append("<td class=\"alive\"></td>");
         else
@@ -104,18 +115,9 @@ $(document).ready(function() {
       }
       $('#board').append("</tr>");
     }
-    newWorld.nextGeneration();
   }
-
-  window.setInterval(timer, 100);
-  timer();
 });
 
-  // for(var i = 1; i <= 40; i++) {
-  //   for(var j = 1; j <=40; j++) {
-  //     if (Math.random() > .5)
-  //       newWorld.findCell(i, j).isAliveToggle();
-  //   }
-  // }
+
 
 
