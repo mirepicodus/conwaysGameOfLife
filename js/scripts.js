@@ -23,17 +23,17 @@ var Cell = {
 }
 
 var World = {
-  initialize: function() {
+  initialize: function(size) {
     this.cells = [];
-    for(var i = 1; i <= 30; i++) {
-      for(var j = 1; j <=30; j++) {
+    for(var i = 1; i <= size; i++) {
+      for(var j = 1; j <= size; j++) {
         this.cells.push(Cell.create(i, j));
       }
     }
   },
-  create: function() {
+  create: function(size) {
     var newWorld = Object.create(World);
-    newWorld.initialize();
+    newWorld.initialize(size);
     return newWorld;
   },
   findCell: function(xCoordinate, yCoordinate) {
@@ -48,6 +48,7 @@ var World = {
     var totalNeighborsAlive = 0;
     var xCoordinate = cellToCheck.xCoordinate;
     var yCoordinate = cellToCheck.yCoordinate;
+    // if cell x or y coor == size then find nieghbor across the sea
     for(var i = -1; i <= 1; i++) {
       for(var j= -1; j <= 1; j++) {
         if (!(i === 0 && j === 0)) {
@@ -83,31 +84,39 @@ var World = {
 }
 
 $(document).ready(function() {
-  newWorld = World.create();
-  // $('td').last().on( "click", function() {
-  // console.log(this);
-  // if($(this).css('background-color')=='#00cc00')
-  //   $(this).css('background-color', '#336699');
-  // else {
-  //  $(this).css('background-color', '#00cc00');
-  // }
+  var size = 10;
+  newWorld = World.create(size);
+
   $('#randomize').click(function() {
-    for(var i = 1; i <= 30; i++) {
-      for(var j = 1; j <=30; j++) {
+    for(var i = 1; i <= size; i++) {
+      for(var j = 1; j <= size; j++) {
         if (Math.random() > .5)
           newWorld.findCell(i, j).isAliveToggle();
       }
     }
   });
 
+  for(var i = 1; i <= size; i++) {
+    $('#board').append("<tr id=\"row-" + i + "\">");
+    for(var j = 1; j <= size; j++) {
+      $('#row-' + i).append("<td class=\"dead\"></td>");
+      // $('td').last().on( "click", function() {
+      //   console.log('pressed');
+      //   $('this').addClass('alive').removeClass('dead');
+      //   newWorld.findCell(i, j).isAliveToggle();
+      // });
+      $('#board').append("</tr>");
+    }
+  }
+
 
   var generations = setInterval(function(){generation()},1000);
   function generation() {
     newWorld.nextGeneration();
     $('#board').text("");
-    for(var i = 1; i <= 30; i++) {
+    for(var i = 1; i <= size; i++) {
       $('#board').append("<tr id=\"row-" + i + "\">");
-      for(var j = 1; j <=30; j++) {
+      for(var j = 1; j <= size; j++) {
         if (newWorld.findCell(i, j).isAlive)
           $('#row-' + i).append("<td class=\"alive\"></td>");
         else
