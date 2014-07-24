@@ -37,16 +37,16 @@ describe("Cell", function(){
 
 describe("World", function() {
   describe("initialize", function() {
-    it("initializes world with 100 spaces", function(){
+    it("initializes world with n spaces", function(){
       var testWorld = Object.create(World);
-      testWorld.initialize();
+      testWorld.initialize(10);
       testWorld.cells[0].xCoordinate.should.equal(1);
       testWorld.cells[1].yCoordinate.should.equal(2);
     });
   });
   describe("create", function() {
     it("creates World object and calls initialize", function(){
-      var testWorld = World.create();
+      var testWorld = World.create(10);
       World.isPrototypeOf(testWorld).should.equal(true);
       testWorld.cells[0].xCoordinate.should.equal(1);
       testWorld.cells[1].yCoordinate.should.equal(2);
@@ -54,14 +54,14 @@ describe("World", function() {
   });
   describe("findCell", function(xCoordinate, yCoordinate) {
     it("finds and returns cell by coordinates", function(){
-      var testWorld = World.create();
+      var testWorld = World.create(10);
       var testCell = testWorld.findCell(1,1);
       testCell.xCoordinate.should.equal(1);
     });
   });
   describe("findAliveNeighbors", function() {
     it("finds states of all neighbors and sets cell isAliveNeighbors value.", function(){
-      var testWorld = World.create();
+      var testWorld = World.create(10);
       testWorld.cells[0].isAliveToggle();
       testWorld.cells[1].isAliveToggle();
       testWorld.cells[2].isAliveToggle();
@@ -71,7 +71,7 @@ describe("World", function() {
   });
   describe("setAliveNeighbors", function() {
     it("finds states of all neighbors and sets cell isAliveNeighbors value.", function(){
-      var testWorld = World.create();
+      var testWorld = World.create(10);
       testWorld.cells[0].isAliveToggle();
       testWorld.cells[1].isAliveToggle();
       testWorld.cells[2].isAliveToggle();
@@ -81,7 +81,7 @@ describe("World", function() {
   });
   describe("nextGeneration", function() {
     it("toggles isAlive based on life criteria", function(){
-      var testWorld = World.create();
+      var testWorld = World.create(10);
       testWorld.cells[10].isAliveToggle();
       testWorld.cells[11].isAliveToggle();
       testWorld.cells[12].isAliveToggle();

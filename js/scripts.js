@@ -48,7 +48,6 @@ var World = {
     var totalNeighborsAlive = 0;
     var xCoordinate = cellToCheck.xCoordinate;
     var yCoordinate = cellToCheck.yCoordinate;
-    // if cell x or y coor == size then find nieghbor across the sea
     for(var i = -1; i <= 1; i++) {
       for(var j= -1; j <= 1; j++) {
         if (!(i === 0 && j === 0)) {
