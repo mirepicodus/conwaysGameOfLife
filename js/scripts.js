@@ -83,47 +83,49 @@ var World = {
 }
 
 $(document).ready(function() {
-  var size = 10;
-  newWorld = World.create(size);
+  $('#get-size').click(function(event) {
 
-  $('#randomize').click(function() {
-    for(var i = 1; i <= size; i++) {
-      for(var j = 1; j <= size; j++) {
-        if (Math.random() > .5)
-          newWorld.findCell(i, j).isAliveToggle();
+    var size = parseInt($('#size').val());
+    newWorld = World.create(size);
+
+    $('#randomize').click(function() {
+      for(var i = 1; i <= size; i++) {
+        for(var j = 1; j <= size; j++) {
+          if (Math.random() > .5)
+            newWorld.findCell(i, j).isAliveToggle();
+        }
+      }
+    });
+
+    // for(var i = 1; i <= size; i++) {
+    //   $('#board').append("<tr id=\"row-" + i + "\">");
+    //   for(var j = 1; j <= size; j++) {
+    //     $('#row-' + i).append("<td class=\"dead\"></td>");
+    //     $('td').last().on( "click", function() {
+    //       console.log('pressed');
+    //       $('this').addClass('alive').removeClass('dead');
+    //       newWorld.findCell(i, j).isAliveToggle();
+    //     });
+    //     $('#board').append("</tr>");
+    //   }
+    // }
+
+    var generations = setInterval(function(){generation()},1000);
+    function generation() {
+      newWorld.nextGeneration();
+      $('#board').text("");
+      for(var i = 1; i <= size; i++) {
+        $('#board').append("<tr id=\"row-" + i + "\">");
+        for(var j = 1; j <= size; j++) {
+          if (newWorld.findCell(i, j).isAlive)
+            $('#row-' + i).append("<td class=\"alive\"></td>");
+          else
+            $('#row-' + i).append("<td class=\"dead\"></td>");
+        }
+        $('#board').append("</tr>");
       }
     }
   });
-
-  for(var i = 1; i <= size; i++) {
-    $('#board').append("<tr id=\"row-" + i + "\">");
-    for(var j = 1; j <= size; j++) {
-      $('#row-' + i).append("<td class=\"dead\"></td>");
-      // $('td').last().on( "click", function() {
-      //   console.log('pressed');
-      //   $('this').addClass('alive').removeClass('dead');
-      //   newWorld.findCell(i, j).isAliveToggle();
-      // });
-      $('#board').append("</tr>");
-    }
-  }
-
-
-  var generations = setInterval(function(){generation()},1000);
-  function generation() {
-    newWorld.nextGeneration();
-    $('#board').text("");
-    for(var i = 1; i <= size; i++) {
-      $('#board').append("<tr id=\"row-" + i + "\">");
-      for(var j = 1; j <= size; j++) {
-        if (newWorld.findCell(i, j).isAlive)
-          $('#row-' + i).append("<td class=\"alive\"></td>");
-        else
-          $('#row-' + i).append("<td class=\"dead\"></td>");
-      }
-      $('#board').append("</tr>");
-    }
-  }
 });
 
 

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <!-- <link rel="stylesheet" type="text/css" href="css/bootstrap.css"> -->
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
   <link rel="stylesheet" type="text/css" href="css/styles.css">
   <script type="text/javascript" src="js/jquery-1.11.1.js"></script>
   <script type="text/javascript" src="js/scripts.js"></script>
@@ -9,8 +9,15 @@
 </head>
 <body>
   <div class='container'>
+    <div class='jumbotron'>
+      <p>Life feeds on life feeds on life feeds on life feeds on life feeds on life feeds on life feeds on life</p>
+    </div>
     <div>
-      <button type='button' id="randomize">Random Life</button>
+      <button type='button' id="randomize" class="btn btn-primary">Random Life</button>
+    </div>
+    <div>
+       <input type="text" id="size" placeholder="How big is the world?">
+      <button type='button' id="get-size" class="btn btn-success">Make World Size</button>
     </div>
     <table id="board">
 
